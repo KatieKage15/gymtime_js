@@ -1,3 +1,3 @@
 class Client < ActiveRecord::Base
-  has_many :clients
+  belongs_to :instructor 
 end
