@@ -36,6 +36,6 @@ private
   end
 
   def client_params
-    params.require(:client).permit(:name, :age, :goals)
+    params.require(:client).permit(:id, :name, :age, :goals)
   end
 end

@@ -9,7 +9,9 @@ instructor3 = Instructor.create(name: "Rosie", bio: "I teach gymnastics and barr
 
 Client.create(name: "Lea", age: 54, goals: "I need to tone up for a tough mudder.", instructor_id: instructor1)
 Client.create(name: "Jamie", age: 35, goals: "I'd like to put on muscle.", instructor_id: instructor1)
+
 Client.create(name: "Steven", age: 27, goals: "I want to lose 20 pounds.", instructor_id: instructor2)
 Client.create(name: "Ashlee", age: 34, goals: "Help me lose my extra fat!", instructor_id: instructor2)
+
 Client.create(name: "William", age: 19, goals: "I really need help with my flexibility.",instructor_id: instructor3)
 Client.create(name: "Sarah", age: 22, goals: "I want to learn how to do a handstand.",instructor_id: instructor3)

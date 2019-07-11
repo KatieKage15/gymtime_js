@@ -4,8 +4,8 @@ class CreateClients < ActiveRecord::Migration[5.2]
       t.string :name
       t.integer :age
       t.string :goals
-
-      t.timestamps null: false 
+      
+      t.timestamps null: false
     end
   end
 end
