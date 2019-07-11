@@ -1,15 +1,13 @@
 class ClientsController < ApplicationController
 
-  before_action :set_client, only: [:show, :edit, :update]
+  before_action :set_client, only: [:show, :edit, :update, :destory]
 
   def index
     @client = Client.all
-    render json: @client, status: 200
   end
 
   def show
     @client = Client.find(params[:id])
-    render json: @client, status: 200
   end
 
   def new
@@ -18,16 +16,27 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.create(client_params)
-    @client.save
-    render json: @client, status: 201
+      if @client.save
+        redirect_to @client, notice: 'Client was successfully created.'
+      else
+        render :new
+      end
   end
 
   def edit
   end
 
   def update
-    @client.update(client_params)
-    render json: @client, status: 202
+    if @client.update(client_params)
+      redirect_to @client, notice: 'Client was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @client.destroy
+    redirect_to clients_url, notice: 'Client was successfully destroyed.'
   end
 
 private
