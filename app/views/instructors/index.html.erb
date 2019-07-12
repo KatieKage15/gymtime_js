@@ -17,7 +17,6 @@
         <td><%= instructor.name %></td>
         <td><%= instructor.bio %></td>
         <td><%= link_to 'Show', instructor %></td>
-        <td><%= link_to 'Edit', edit_instructor_path(post) %></td>
         <td><%= link_to 'Destroy', instructor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -28,5 +27,3 @@
 
 <button id="click-me">This button listens for clicks</button>
 <div id="our-new-instructors"></div>
-
-<%= link_to 'New Instructor', new_instructor_path %>
