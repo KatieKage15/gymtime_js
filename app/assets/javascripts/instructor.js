@@ -18,8 +18,8 @@ function getInstructor(){
   }).done(function (data){
     console.log("your data is: ", data)
     let myInstructor = new Instructor(data[0])
-    let myInstructorHTML = theInstructor.postHTML()
-    document.getElementById('ajax-instructors').innerHTML += myInstructorHTML
+    let myInstructorHTML = myInstructor.myInstructorHTML()
+    document.getElementById('our-new-instructors').innerHTML += myInstructorHTML
   })
 }
 
@@ -31,20 +31,9 @@ class Instructor {
     this.bio = obj.bio
     this.clients = obj.clients
   }
-
-  static newInstructorForm() {
-    return ('
-    <strong>New Instructor Client form</strong>
-      <form>
-        <input id='instructor-name' type='text' name='name'></input><br>
-        <input type='text' name='bio'></input><br>
-        <input type='submit'>
-      </form>
-    ')
-  }
 }
 
-Instructor.prototype.instructorHTML = function () {
+Instructor.prototype.myInstructorHTML = function () {
   let instructorClients = this.clients.map(client => {
     return (`
       <p>${client.name}</p>
@@ -53,9 +42,8 @@ Instructor.prototype.instructorHTML = function () {
   return (`
     <div>
       <h3>${this.name}</h3>
-      <p>${this.age}</p>
-      <p>${this.goals}</p>
-      <p>${instructorClients}<p?
+      <p>${this.bio}</p>
+      <p>${instructorClients}</p>
     </div>
   `)
 }

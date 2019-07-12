@@ -1,5 +1,4 @@
 class ClientsController < ApplicationController
-
   before_action :set_client, only: [:show, :edit, :update, :destory]
 
   def index
