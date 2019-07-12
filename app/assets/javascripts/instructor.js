@@ -10,18 +10,19 @@ function listenForClick(){
   })
 }
 
-function getInsctructor(){
+function getInstructor(){
   $.ajax({
     url: 'http://localhost:3000/instructors',
     method: 'get',
     dataType: 'json',
   }).done(function (data){
     console.log("your data is: ", data)
-    let theInstructor = new Instructor(data[0])
+    let myInstructor = new Instructor(data[0])
     let myInstructorHTML = theInstructor.postHTML()
-    document.getElementById('our-new-instructors').innerHTML += myInstructorHTML
+    document.getElementById('ajax-instructors').innerHTML += myInstructorHTML
   })
 }
+
 
 class Instructor {
   constructor (obj){
@@ -29,7 +30,17 @@ class Instructor {
     this.name = obj.name
     this.bio = obj.bio
     this.clients = obj.clients
-    debugger
+  }
+
+  static newInstructorForm() {
+    return ('
+    <strong>New Instructor Client form</strong>
+      <form>
+        <input id='instructor-name' type='text' name='name'></input><br>
+        <input type='text' name='bio'></input><br>
+        <input type='submit'>
+      </form>
+    ')
   }
 }
 
