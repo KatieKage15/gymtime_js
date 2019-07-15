@@ -23,6 +23,16 @@ function getInstructor(){
   })
 }
 
+$(() => {
+  bindClickHandlers()
+})
+
+const bindClickHandlers = () => {
+  $(`.all_clients`).on(`click`), (e) => {
+    e.preventDefault()
+    console.log('hello')
+  })
+}
 
 class Instructor {
   constructor (obj){
