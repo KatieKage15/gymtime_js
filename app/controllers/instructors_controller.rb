@@ -1,6 +1,6 @@
 class InstructorsController < ApplicationController
 
-  before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_instructor, only: [:show, :edit, :update, :destroy]
 
   def index
     @instructor = Instructor.all
@@ -60,7 +60,7 @@ class InstructorsController < ApplicationController
 
   private
 
-    def set_post
+    def set_instructor
       @instructor = Instructor.find(params[:id])
     end
 
