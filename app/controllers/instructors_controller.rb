@@ -1,5 +1,4 @@
 class InstructorsController < ApplicationController
-
   before_action :set_instructor, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -64,7 +63,7 @@ class InstructorsController < ApplicationController
       @instructor = Instructor.find(params[:id])
     end
 
-    def post_params
+    def instructor_params
       params.require(:instructor).permit(:name, :bio)
     end
 end
