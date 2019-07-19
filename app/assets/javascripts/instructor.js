@@ -1,12 +1,34 @@
-$(function(){
-    console.log("js is active")
-    listenForClick()
+$(document).ready(function(){
+    showInstructor()
+    submitInstructor()
+    console.log("hi katie")
 })
 
-function listenForClick(){
+function showInstructor(){
   $("button#click-me").on('click', function (event){
     event.preventDefault()
     getInstructor()
+  })
+}
+
+function submitInstructor(){
+  $("#new_instructor").on('submit', function(e){
+      e.preventDefault();
+      const formValues = $(this).serialize();
+      const clientId = document.location.href.match(/\d+/g)[1];
+      $.post('/clients/' + clientId + '/instructors', formValues).done(function(data){
+        let pantry = new Instructor(data);
+        displayNewInstructor(instructor);
+      });
+    });
+  }
+
+function getNewInstructor(values){
+  $.post("/instructors", values).done(function(data){
+    $("#container").html("");
+    const newIns= new Instructor(data)
+    const html= newIns.showHTML()
+    $("#container").append(html)
   })
 }
 
@@ -16,7 +38,6 @@ function getInstructor(){
     method: 'get',
     dataType: 'json',
   }).done(function (data){
-    console.log("your data is: ", data)
     let myInstructor = new Instructor(data[0])
     let myInstructorHTML = myInstructor.instructorHTML()
     document.getElementById('our-new-instructors').innerHTML += myInstructorHTML
@@ -35,7 +56,7 @@ class Instructor {
 Instructor.prototype.instructorHTML = function(){
   let clients = this.clients.map(client => {
     return(`
-      <p>${client.name}, ${client.age} : ${client.goals}</p>
+      <strong><p>${client.name}, ${client.age} : ${client.goals}</p></strong>
       `)
   }).join('')
 
