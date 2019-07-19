@@ -1,7 +1,14 @@
-
 <div class='topnav'>
-  <%= link_to "Home", root_path %>
-  <%= link_to "Instructors", instructors_path %>
-  <%= link_to "Clients", clients_path %>
-  <%= link_to "New Instructor", new_instructor_path %>
-</div>
+      <%if !current_user%>
+        <%=link_to "Sign Up", new_user_path%>
+        <%=link_to "Sign In", signin_path%>
+      <%else%>
+        <%=link_to "Sign Out", logout_path, method: 'delete'%>
+      <%end%>
+      <%=link_to "Home", root_path%>
+      <%if current_user%>
+      <%= link_to "Instructors", instructors_path %>
+      <%= link_to "Clients", clients_path %>
+      <%= link_to "New Instructor", new_instructor_path %>
+      <%end%>
+    </div>
