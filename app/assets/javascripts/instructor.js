@@ -14,12 +14,8 @@ function showInstructor(){
 function submitInstructor(){
   $("#new_instructor").on('submit', function(e){
       e.preventDefault();
+      console.log("katie")
       const formValues = $(this).serialize();
-      const clientId = document.location.href.match(/\d+/g)[1];
-      $.post('/clients/' + clientId + '/instructors', formValues).done(function(data){
-        let pantry = new Instructor(data);
-        displayNewInstructor(instructor);
-      });
     });
   }
 
@@ -38,7 +34,8 @@ function getInstructor(){
     method: 'get',
     dataType: 'json',
   }).done(function (data){
-    let myInstructor = new Instructor(data[0])
+    let myInstructor = new Instructor(data).forEach do |f|
+      
     let myInstructorHTML = myInstructor.instructorHTML()
     document.getElementById('our-new-instructors').innerHTML += myInstructorHTML
   })
