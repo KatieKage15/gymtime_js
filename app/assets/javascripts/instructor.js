@@ -14,17 +14,13 @@ function showInstructor(){
 function submitInstructor(){
   $("#new_instructor").on('submit', function(e){
       e.preventDefault();
-      console.log("katie")
-      const formValues = $(this).serialize();
-    });
-  }
-
-function getNewInstructor(values){
-  $.post("/instructors", values).done(function(data){
-    $("#container").html("");
-    const newIns= new Instructor(data)
-    const html= newIns.showHTML()
-    $("#container").append(html)
+      const values = $(this).serialize()
+      $.post('/instructors', values).done(function(data) {
+        $("#app-container").html("")
+        const newIns = new Instructor(data)
+        const htmlToAdd = newIns.formatShow()
+        $("#app-container").append(htmlToAdd)
+      })
   })
 }
 
@@ -34,9 +30,8 @@ function getInstructor(){
     method: 'get',
     dataType: 'json',
   }).done(function (data){
-    let myInstructor = new Instructor(data).forEach do |f|
-      
-    let myInstructorHTML = myInstructor.instructorHTML()
+    let myInstructor = new Instructor(data[0])
+    let myInstructorHTML = myInstructor.formatIndex()
     document.getElementById('our-new-instructors').innerHTML += myInstructorHTML
   })
 }
@@ -50,7 +45,7 @@ class Instructor {
   }
 }
 
-Instructor.prototype.instructorHTML = function(){
+Instructor.prototype.formatIndex = function(){
   let clients = this.clients.map(client => {
     return(`
       <strong><p>${client.name}, ${client.age} : ${client.goals}</p></strong>
@@ -64,4 +59,12 @@ Instructor.prototype.instructorHTML = function(){
     <p>${clients}</p>
     </div>
     `)
+}
+
+Instructor.prototype.formatShow = function(){
+  let postHtml = `
+    <h3>${this.name}</h3>
+    <h2>${this.bio}</h2>
+    `
+    return postHtml
 }

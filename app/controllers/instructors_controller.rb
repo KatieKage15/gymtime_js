@@ -27,14 +27,8 @@ class InstructorsController < ApplicationController
 
   def create
     @instructor = Instructor.new(instructor_params)
-    if @instructor.save
-      respond_to do |f|
-        f.html {redirect_to @instructor, notice: 'Instructor was successfully created.'}
-        f.json {render json: @instructor}
-      end
-    else
-      render :new
-    end
+    @instructor.save
+      render json: @instructor
   end
 
   def update
