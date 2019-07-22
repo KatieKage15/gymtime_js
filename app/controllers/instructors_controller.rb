@@ -3,14 +3,10 @@ class InstructorsController < ApplicationController
 
   def index
     @instructor = Instructor.all
-    respond_to do |f|
-      f.html {render :index}
-      f.json {render json: @instructor}
-    end
   end
 
   def show
-    @instructor = Instructor.find(params[:id])
+    @instructor = Instructor.findby(params[:id])
     respond_to do |f|
       f.html {render :show}
       f.json {render json: @instructor}
@@ -58,6 +54,6 @@ class InstructorsController < ApplicationController
     end
 
     def instructor_params
-      params.require(:instructor).permit(:name, :bio)
+      params.require(:instructor).permit(:name, :bio, :id)
     end
 end

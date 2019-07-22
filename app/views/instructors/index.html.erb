@@ -14,10 +14,12 @@
   <tbody>
     <% @instructor.each do |instructor| %>
       <tr>
-        <td><%= instructor.name %></td>
+        <td><%= link_to instructor.name, instructors_path %></td>
         <td><%= instructor.bio %></td>
         <td><%= link_to 'Show', instructor %></td>
         <td><%= link_to 'Destroy', instructor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Add Client', new_client_path %></td>
+
       </tr>
     <% end %>
   </tbody>
@@ -25,5 +27,4 @@
 
 <br>
 
-<button id="click-me">View Instructor's Clients</button>
 <div id="our-new-instructors"></div>
