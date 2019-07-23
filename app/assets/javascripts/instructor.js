@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    console.log("hi katie")
+  console.log("hi katie")
     getInstructorByName()
     newInstructor()
     getClients()
@@ -100,9 +100,9 @@ function showClient(){
         e.preventDefault()
         let id = $(this).attr('data-id')
 
-        history.pushState(null, null, `clients/${id}`)
+        history.pushState(null, null, `instructors/${id}`)
         $('#app-container').html('')
-        fetch(`/clients/${id}.json`)
+        fetch(`/instructors/${id}.json`)
         .then(res => res.json())
         .then(clientData => {
             let newClient = new Client(clientData)
@@ -123,7 +123,7 @@ class Client {
 
 Client.prototype.formatClientsIndex = function(){
     let clientsHtml = `
-      <a href="/clients/${this.id}" data-id="${this.id}" class="show_link">
+      <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
       <h3>${this.name}</h3></a>
     `
     return clientsHtml
@@ -131,7 +131,7 @@ Client.prototype.formatClientsIndex = function(){
 
 Client.prototype.formatClientShow = function(){
   let clientHtml = `
-    <a href="/clients/${this.id}" data-id="${this.id}" class="show_link">
+    <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
     <h2>${this.name}</h2>
     <h2>${this.goals}</h2>
     `
