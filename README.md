@@ -14,11 +14,7 @@ This app is free to use.  To install this app:
 
     3. Run the command "rake db:migrate" to create Active Record migrations.
 
-    4. Once migrations are complete, run the command "rails s" to create a local server.  Visit the URL provided (http://localhost:3000/) and create an account or login to your existing account.  You can also sign up and/or login using your existing Github account.
-
-## Contributing
-
-This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+    4. Once migrations are complete, run the command "rails s" to create a local server.  Visit the URL provided (http://localhost:3000/).
 
 ## License
 
