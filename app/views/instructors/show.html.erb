@@ -3,9 +3,8 @@
   <h3>Bio:</h3>
   <%= @instructor.bio%>
   <h4>Clients:</h4>
-  <%= @instructor.first.name%>
-  <%= @instructor.first.age%>
-  <%= @instructor.first.goals%>
+  <%= @instructor.clients.name%>
 
-<%= link_to 'Edit', edit_instructor_path(@instructor) %>
+<div>
 <%= link_to 'Back', instructors_path %>
+</div>

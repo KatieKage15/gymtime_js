@@ -16,7 +16,6 @@
       <tr>
         <td><%= link_to instructor.name, instructors_path %></td>
         <td><%= instructor.bio %></td>
-        <td><%= link_to 'Edit', edit_instructor_path %></td>
         <td><%= link_to 'Delete', instructor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <td><%= link_to 'Add Client', new_client_path %></td>
 

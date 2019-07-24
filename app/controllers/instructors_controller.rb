@@ -3,6 +3,10 @@ class InstructorsController < ApplicationController
 
   def index
     @instructor = Instructor.all
+    respond_to do |f|
+      f.html {render :index}
+      f.json {render json: @instructor}
+    end
   end
 
   def show
@@ -18,13 +22,12 @@ class InstructorsController < ApplicationController
   end
 
   def edit
-
   end
 
   def create
     @instructor = Instructor.new(instructor_params)
     @instructor.save
-      render json: @instructor
+      render json: @instructor 
   end
 
   def update
@@ -50,7 +53,7 @@ class InstructorsController < ApplicationController
   private
 
     def set_instructor
-      @instructor = Instructor.find(params[:id])
+      @instructor = Instructor.find_by_id(params[:id])
     end
 
     def instructor_params

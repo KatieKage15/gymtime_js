@@ -1,154 +1,87 @@
-$(document).ready(function() {
+$(() => {
   console.log("hi katie")
-    getInstructorByName()
-    newInstructor()
     showInstructor()
-    // getClients()
-    // showClient()
+    newInstructor()
 })
 
-function getInstructorByName(){
-  $.ajax({
-    url: 'http://localhost:3000/instructors',
-    method: 'get',
-    dataType: 'json',
-  }).done(function (data){
-    data = data.sort(function(a, b) {
-            var nameA = a.name.toUpperCase();
-            var nameB = b.name.toUpperCase();
-            if (nameA < nameB) {
-              return -1;
-            }
-            if (nameA > nameB) {
-              return 1;
-            }
-            return data;
-        });
-        data.forEach(instructor => {
-          let myInstructor = new Instructor(instructor)
-          let myInstructorHTML = myInstructor.formatInstructorIndex()
-          document.getElementById('our-new-instructors').innerHTML += myInstructorHTML
+const showInstructor = () => {
+  $('.all_instructors').on('click', e => {
+    e.preventDefault()
+    history.pushState(null, null, "instructors")
+    fetch(`/instructors.json`)
+      .then(res => res.json())
+      .then(instructors => {
+        $('#app-container').html('')
+        instructors.forEach(instructor => {
+          let newIns = new Instructor(instructor)
+
+          let insHTML = newIns.formatInsIndex()
+
+          $('#app-container').append(insHTML)
         })
+      })
+  })
+
+  $(document).on('click', ".show_link", function(e) {
+    e.preventDefault()
+    $('#app-container').html('')
+    let id = $(this).attr('data-id')
+    fetch(`/instructors/${id}.json`)
+    .then(res => res.json())
+    .then(instructor => {
+      let newIns = new Instructor(instructor)
+
+      let insHTML = newIns.formatInsShow()
+
+      $('#app-container').append(insHTML)
+    })
   })
 }
 
-class Instructor {
-  constructor(obj){
+function Instructor(obj) {
     this.id = obj.id
     this.name = obj.name
     this.bio = obj.bio
     this.clients = obj.clients
-  }
 }
 
-Instructor.prototype.formatInstructorIndex = function(){
-  let clientsInfo = this.clients.map(clientsData => {
-    return(`
-      <strong><p>${clientsInfo.name}, ${clientsInfo.age} : ${clientsInfo.goals}</p></strong>
-      `)
+Instructor.prototype.formatInsIndex = function(){
+  let insHTML = `
+    <a href="/instructors/${this.id}" data-id="${this.id}" class="show_link"><h2>${this.name}</h2></a>
+    <h3>${this.bio}</h3>
+    `
+    return insHTML
+}
+
+Instructor.prototype.formatInsShow = function(){
+  let clients = this.clients.map(client => {
+
+    return (`
+      <p>${client.name}</p>
+    `)
   }).join('')
 
-  return(`
-    <div>
-    <h2>${this.name}</h2>
-    <h3>${this.bio}</h3>
-    <p>${clients}</p>
-    </div>
-    `)
+    return (`
+      <div>
+        <h3>${this.name}</h3>
+        <h4>${this.bio}</h4>
+        <p>${clients}</p>
+      </div>
+      `)
 }
-
 
 function newInstructor(){
   $("#new_instructor").on('submit', function(e){
       e.preventDefault();
 
       const values = $(this).serialize()
-      $.post('/instructors', values).done(function(data) {
-          $("#app-container").html("")
+      $.post(`/instructors`, values).done(function(data) {
 
-        const newIns = new Instructor(data)
-        const htmlToAdd = newIns.formatInstructorShow()
+          $("#app-container").html('')
+
+        const newInstructor = new Instructor(data)
+        const htmlToAdd = newInstructor.formatInsShow()
         $("#app-container").append(htmlToAdd)
       })
   })
 }
-
-Instructor.prototype.formatInstructorShow = function(){
-  let instructorHtml = `
-    <h3>${this.name}</h3>
-    <h2>${this.bio}</h2>
-    `
-    return instructorHtml
-}
-
-function showInstructor(){
-  $('.all_instructors').on('click', ".show_link", function(e){
-    e.preventDefault()
-    fetch('/instructors/clients.json')
-    .then(res => res.json())
-    .then(data => {
-      $('#app-container').html('')
-      instructors.forEach(instructor => {
-        console.log(instructor)
-      })
-    })
-  })
-}
-
-// function getClients(){
-//     $.ajax({
-//         url: 'http://localhost:3000/clients',
-//         method: 'get',
-//         dataType: 'json'
-//     }).done(function (data) {
-//           data.forEach(client => {
-//             let allClients = new Client(data)
-//             let allClientsHTML = allClients.formatReviewsIndex()
-//             document.getElementById('our-new-clients').innerHTML += allClientsHTML
-//           })
-//     })
-//
-// }
-//
-// function showClient(){
-//     $('.all_instructors').on('click', ".show_link", function(e){
-//         e.preventDefault()
-//         let id = $(this).attr('data-id')
-//
-//         history.pushState(null, null, `instructors/${id}`)
-//         $('#app-container').html('')
-//         fetch(`/instructors/${id}.json`)
-//         .then(res => res.json())
-//         .then(data => {
-//             let newClient = new Client(clientData)
-//             let showClientHTML = newClient.formatClientShow()
-//             $("#app-container").append(showClientHTML)
-//         })
-//     })
-// }
-//
-// class Client {
-//   constructor(obj){
-//     this.id = obj.id
-//     this.name = obj.name
-//     this.goals = obj.goals
-//     this.instructor_id = obj.instructor_id
-//   }
-// }
-//
-// Client.prototype.formatClientsIndex = function(){
-//     let clientsHtml = `
-//       <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
-//       <h3>${this.name}</h3></a>
-//     `
-//     return clientsHtml
-//   }
-//
-// Client.prototype.formatClientShow = function(){
-//   let clientHtml = `
-//     <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
-//     <h2>${this.name}</h2>
-//     <h2>${this.goals}</h2>
-//     `
-//     return clientHtml
-// }
