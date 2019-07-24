@@ -2,8 +2,9 @@ $(document).ready(function() {
   console.log("hi katie")
     getInstructorByName()
     newInstructor()
-    getClients()
-    showClient()
+    showInstructor()
+    // getClients()
+    // showClient()
 })
 
 function getInstructorByName(){
@@ -43,7 +44,7 @@ class Instructor {
 Instructor.prototype.formatInstructorIndex = function(){
   let clientsInfo = this.clients.map(clientsData => {
     return(`
-      <strong><p>${clientInfo.name}, ${clientInfo.age} : ${clientInfo.goals}</p></strong>
+      <strong><p>${clientsInfo.name}, ${clientsInfo.age} : ${clientsInfo.goals}</p></strong>
       `)
   }).join('')
 
@@ -80,60 +81,74 @@ Instructor.prototype.formatInstructorShow = function(){
     return instructorHtml
 }
 
-function getClients(){
-    $.ajax({
-        url: 'http://localhost:3000/clients',
-        method: 'get',
-        dataType: 'json'
-    }).done(function (data) {
-          data.forEach(client => {
-            let allClients = new Client(data)
-            let allClientsHTML = allClients.formatReviewsIndex()
-            document.getElementById('our-new-clients').innerHTML += allClientsHTML
-          })
+function showInstructor(){
+  $('.all_instructors').on('click', ".show_link", function(e){
+    e.preventDefault()
+    fetch('/instructors/clients.json')
+    .then(res => res.json())
+    .then(data => {
+      $('#app-container').html('')
+      instructors.forEach(instructor => {
+        console.log(instructor)
+      })
     })
-
+  })
 }
 
-function showClient(){
-    $(document).on('click', ".show_link", function(e){
-        e.preventDefault()
-        let id = $(this).attr('data-id')
-
-        history.pushState(null, null, `instructors/${id}`)
-        $('#app-container').html('')
-        fetch(`/instructors/${id}.json`)
-        .then(res => res.json())
-        .then(clientData => {
-            let newClient = new Client(clientData)
-            let showClientHTML = newClient.formatClientShow()
-            $("#app-container").append(showClientHTML)
-        })
-    })
-}
-
-class Client {
-  constructor(obj){
-    this.id = obj.id
-    this.name = obj.name
-    this.goals = obj.goals
-    this.instructor_id = obj.instructor_id
-  }
-}
-
-Client.prototype.formatClientsIndex = function(){
-    let clientsHtml = `
-      <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
-      <h3>${this.name}</h3></a>
-    `
-    return clientsHtml
-  }
-
-Client.prototype.formatClientShow = function(){
-  let clientHtml = `
-    <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
-    <h2>${this.name}</h2>
-    <h2>${this.goals}</h2>
-    `
-    return clientHtml
-}
+// function getClients(){
+//     $.ajax({
+//         url: 'http://localhost:3000/clients',
+//         method: 'get',
+//         dataType: 'json'
+//     }).done(function (data) {
+//           data.forEach(client => {
+//             let allClients = new Client(data)
+//             let allClientsHTML = allClients.formatReviewsIndex()
+//             document.getElementById('our-new-clients').innerHTML += allClientsHTML
+//           })
+//     })
+//
+// }
+//
+// function showClient(){
+//     $('.all_instructors').on('click', ".show_link", function(e){
+//         e.preventDefault()
+//         let id = $(this).attr('data-id')
+//
+//         history.pushState(null, null, `instructors/${id}`)
+//         $('#app-container').html('')
+//         fetch(`/instructors/${id}.json`)
+//         .then(res => res.json())
+//         .then(data => {
+//             let newClient = new Client(clientData)
+//             let showClientHTML = newClient.formatClientShow()
+//             $("#app-container").append(showClientHTML)
+//         })
+//     })
+// }
+//
+// class Client {
+//   constructor(obj){
+//     this.id = obj.id
+//     this.name = obj.name
+//     this.goals = obj.goals
+//     this.instructor_id = obj.instructor_id
+//   }
+// }
+//
+// Client.prototype.formatClientsIndex = function(){
+//     let clientsHtml = `
+//       <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
+//       <h3>${this.name}</h3></a>
+//     `
+//     return clientsHtml
+//   }
+//
+// Client.prototype.formatClientShow = function(){
+//   let clientHtml = `
+//     <a href="/instructors/${this.instructor_id}" data-id="${this.instructor_id}" class="show_link">
+//     <h2>${this.name}</h2>
+//     <h2>${this.goals}</h2>
+//     `
+//     return clientHtml
+// }

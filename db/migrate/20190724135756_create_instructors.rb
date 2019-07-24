@@ -3,7 +3,6 @@ class CreateInstructors < ActiveRecord::Migration[5.2]
     create_table :instructors do |t|
       t.string :name
       t.string :bio 
-      t.timestamps
     end
   end
 end

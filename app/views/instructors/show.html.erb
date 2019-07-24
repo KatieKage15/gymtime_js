@@ -1,14 +1,11 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <h2><strong>Name:</strong></h2>
+  <h2>Name:</h2>
   <%= @instructor.name %>
-</p>
-
-<p>
-  <h3><strong>Bio:</strong></h3>
+  <h3>Bio:</h3>
   <%= @instructor.bio%>
-</p>
+  <h4>Clients:</h4>
+  <%= @instructor.first.name%>
+  <%= @instructor.first.age%>
+  <%= @instructor.first.goals%>
 
 <%= link_to 'Edit', edit_instructor_path(@instructor) %>
 <%= link_to 'Back', instructors_path %>
